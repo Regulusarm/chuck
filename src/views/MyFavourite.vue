@@ -13,7 +13,8 @@ import { onMounted, ref } from 'vue';
 const favouriteJokes = ref([]);
 
 function getItems() {
-  favouriteJokes.value = localStorage.getItem('MyFavourite') ? JSON.parse(localStorage.getItem('MyFavourite')!) : [];
+  const myFavourite = localStorage.getItem('MyFavourite');
+  favouriteJokes.value = myFavourite ? JSON.parse(myFavourite) : [];
 }
 
 function deleteAll() {
@@ -29,6 +30,6 @@ onMounted(() => {
 
 <style>
 .controller {
-  padding: 16px;
+  padding-left: 16px;
 }
 </style>

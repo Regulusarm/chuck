@@ -13,20 +13,19 @@
 import { onMounted, ref } from 'vue';
 import { limit } from '@/const';
 
-const props = defineProps({
-     joke: {
-      type: String,
-      required: true,
-     },
-    })
+const props = defineProps<{
+  joke: string;
+}>();
 
-const emits = defineEmits(['reload']);
+const emits = defineEmits<{
+  (e: 'reload'): void;
+}>();
 
 const isLike = ref(true);
 
 function getJokesFromStorage() {
-  const myFavourite = localStorage.getItem('MyFavourite') ? JSON.parse(localStorage.getItem('MyFavourite')!) : [];
-  return myFavourite;
+  const myFavourite = localStorage.getItem('MyFavourite');
+  return myFavourite ? JSON.parse(myFavourite) : [];
 }
 
 function addJoke() {
@@ -34,8 +33,8 @@ function addJoke() {
   if (myFavourite.length >= limit) {
     myFavourite.shift();
   } 
-    myFavourite.push(props.joke);
-    localStorage.setItem('MyFavourite', JSON.stringify(myFavourite));
+  myFavourite.push(props.joke);
+  localStorage.setItem('MyFavourite', JSON.stringify(myFavourite));
   
   isLike.value = false;
   emits('reload');
@@ -68,12 +67,6 @@ function action() {
 </script>
 
 <style>
-/* .joke {
-  text-align: center;
-  padding: 15px;
-  background-color: rgb(255, 217, 148);
-  border-radius: 20px;
-} */
 .cards_item {
   display: flex;
   padding: 1rem;
@@ -109,15 +102,6 @@ function action() {
   height: 100%;
   padding: 1rem;
   background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);
-}
-
-.card_title {
-  color: #ffffff;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: capitalize;
-  margin: 0px;
 }
 
 .card_text {

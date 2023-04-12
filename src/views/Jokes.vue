@@ -1,7 +1,7 @@
 <template>
   <div class="control">
     <button @click="getJoke" class="btn" style="margin-right: 10px;">Get Joke</button>
-    <button @click="getFlowofJokes" class="btn">Get Flow of Jokes</button>
+    <button @click="getFlowofJokes" class="btn">{{ isActiveFlow ? 'Stop Flow' : 'Get Flow' }}</button>
   </div>
   <ul class="cards">
     <Joke v-for="joke in jokes" :joke="joke.value" :key="joke.id" />
@@ -11,10 +11,11 @@
 <script setup lang="ts">
 import Joke from '@/components/Joke.vue'
 import JokesAPI from '@/api/jokes.api';
-import { ref, type Ref } from 'vue';
+import { ref } from 'vue';
 
 const jokes: Record<string, any> = ref([]);
-let intervalId:number = 0;
+let intervalId = 0;
+const isActiveFlow = ref(false);
 
 async function getJoke() {
   const joke = await JokesAPI.getJoke();
@@ -24,9 +25,11 @@ async function getJoke() {
 async function getFlowofJokes() {
   if (intervalId) {
     clearInterval(intervalId);
+    isActiveFlow.value = false;
     intervalId = 0;
   } else {
     intervalId = setInterval(getJoke, 3000);
+    isActiveFlow.value = true;
   }
 }
 </script>
