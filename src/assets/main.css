@@ -1,0 +1,20 @@
+@import './base.css';
+
+#app {
+  font-weight: normal;
+}
+
+.page-link {
+  text-decoration: none;
+  color: orange;
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  .page-link:hover {
+    background-color: rgba(255, 166, 0, 0.432)
+  }
+}
+
+@media (min-width: 1024px) {
+}
